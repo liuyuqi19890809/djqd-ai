@@ -363,25 +363,33 @@ async function sendMessage() {
 
                 if (pollData.data && pollData.data.status === 'completed') {
                     clearInterval(pollInterval);
-                    const msgResp = await fetch(
-                        'https://api.coze.cn/v3/chat/message/list?chat_id=' + chatId + '&conversation_id=' + conversationId,
-                        {
-                            headers: { 'Authorization': 'Bearer ' + API_KEY }
-                        }
-                    );
-                    const msgData = await msgResp.json();
+                    console.log('Chat completed, fetching messages...');
+                    try {
+                        const msgResp = await fetch(
+                            'https://api.coze.cn/v3/chat/message/list?chat_id=' + chatId + '&conversation_id=' + conversationId,
+                            {
+                                headers: { 'Authorization': 'Bearer ' + API_KEY }
+                            }
+                        );
+                        const msgData = await msgResp.json();
+                        console.log('Messages response:', msgData.code, msgData.msg, 'count:', msgData.data ? msgData.data.length : 0);
 
-                    removeMessage(loadingEl);
+                        removeMessage(loadingEl);
 
-                    if (msgData.data && msgData.data.length > 0) {
-                        const answerMsg = msgData.data.find(m => m.role === 'assistant' && m.type === 'answer');
-                        if (answerMsg) {
-                            addMessage('bot', formatAnswer(answerMsg.content));
+                        if (msgData.data && msgData.data.length > 0) {
+                            const answerMsg = msgData.data.find(m => m.role === 'assistant' && m.type === 'answer');
+                            if (answerMsg) {
+                                addMessage('bot', formatAnswer(answerMsg.content));
+                            } else {
+                                addMessage('bot', '抱歉，未能获取到回答，请重新提问。');
+                            }
                         } else {
                             addMessage('bot', '抱歉，未能获取到回答，请重新提问。');
                         }
-                    } else {
-                        addMessage('bot', '抱歉，未能获取到回答，请重新提问。');
+                    } catch(msgErr) {
+                        console.error('Message fetch error:', msgErr);
+                        removeMessage(loadingEl);
+                        addMessage('bot', '❌ 获取回复失败：' + msgErr.message);
                     }
                     isLoading = false;
                     sendBtn.disabled = false;
