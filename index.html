@@ -325,7 +325,6 @@ async function sendMessage() {
         }
 
         const data = await response.json();
-        console.log('Chat API response:', data.code, data.msg);
 
         if (data.code !== 0) {
             removeMessage(loadingEl);
@@ -359,11 +358,9 @@ async function sendMessage() {
                     }
                 );
                 const pollData = await pollResp.json();
-                console.log('Poll attempt', attempts, ':', pollData.data ? pollData.data.status : pollData.msg);
 
                 if (pollData.data && pollData.data.status === 'completed') {
                     clearInterval(pollInterval);
-                    console.log('Chat completed, fetching messages...');
                     try {
                         const msgResp = await fetch(
                             'https://api.coze.cn/v3/chat/message/list?chat_id=' + chatId + '&conversation_id=' + conversationId,
@@ -372,7 +369,6 @@ async function sendMessage() {
                             }
                         );
                         const msgData = await msgResp.json();
-                        console.log('Messages response:', msgData.code, msgData.msg, 'count:', msgData.data ? msgData.data.length : 0);
 
                         removeMessage(loadingEl);
 
