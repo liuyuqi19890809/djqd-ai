@@ -306,16 +306,26 @@ async function sendMessage() {
             payload.conversation_id = conversationId;
         }
 
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer ' + API_KEY,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        });
+        let response;
+        try {
+            response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + API_KEY,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+        } catch(fetchErr) {
+            removeMessage(loadingEl);
+            addMessage('bot', '❌ 网络请求失败：' + fetchErr.message + '。请检查网络连接。');
+            isLoading = false;
+            sendBtn.disabled = false;
+            return;
+        }
 
         const data = await response.json();
+        console.log('Chat API response:', data.code, data.msg);
 
         if (data.code !== 0) {
             removeMessage(loadingEl);
@@ -349,6 +359,7 @@ async function sendMessage() {
                     }
                 );
                 const pollData = await pollResp.json();
+                console.log('Poll attempt', attempts, ':', pollData.data ? pollData.data.status : pollData.msg);
 
                 if (pollData.data && pollData.data.status === 'completed') {
                     clearInterval(pollInterval);
