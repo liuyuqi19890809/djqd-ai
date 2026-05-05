@@ -345,7 +345,7 @@ async function sendMessage() {
                 const pollResp = await fetch(
                     'https://api.coze.cn/v3/chat/retrieve?chat_id=' + chatId + '&conversation_id=' + conversationId,
                     {
-                        headers: { 'Authorization': 'Bearer ' + API_TOKEN }
+                        headers: { 'Authorization': 'Bearer ' + API_KEY }
                     }
                 );
                 const pollData = await pollResp.json();
@@ -355,7 +355,7 @@ async function sendMessage() {
                     const msgResp = await fetch(
                         'https://api.coze.cn/v3/chat/message/list?chat_id=' + chatId + '&conversation_id=' + conversationId,
                         {
-                            headers: { 'Authorization': 'Bearer ' + API_TOKEN }
+                            headers: { 'Authorization': 'Bearer ' + API_KEY }
                         }
                     );
                     const msgData = await msgResp.json();
