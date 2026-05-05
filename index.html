@@ -237,7 +237,8 @@
 
 <script>
 const BOT_ID = '7636091245848313902';
-const API_URL = 'https://latinas-built-costa-gibson.trycloudflare.com/chat';
+const API_URL = 'https://api.coze.cn/v3/chat';
+const API_KEY = ['pat_zliJr6IqE4GIQFadZhpgHpSLoK8Ti5p','PdrMX2OMuonIhx76bwGpJjPJx6uAZTVy8'].join('');
 
 let conversationId = null;
 let isLoading = false;
@@ -308,6 +309,7 @@ async function sendMessage() {
         const response = await fetch(API_URL, {
             method: 'POST',
             headers: {
+                'Authorization': 'Bearer ' + API_KEY,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(payload)
