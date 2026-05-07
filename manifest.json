@@ -1,7 +1,7 @@
 {
     "name": "党建问答AI",
     "short_name": "党建问答",
-    "description": "金湾区直机关工委 · 智能党务助手",
+    "description": "智能党务助手",
     "start_url": ".",
     "display": "standalone",
     "orientation": "portrait",

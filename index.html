@@ -6,44 +6,33 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="党建问答AI">
-    <meta name="theme-color" content="#c41e3a">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23c41e3a' width='100' height='100' rx='20'/><text x='50' y='68' font-size='50' text-anchor='middle' fill='white'>☭</text></svg>">
-    <title>党建问答AI - 金湾区直机关工委</title>
+    <title>党建问答AI - 智能党务助手</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
             background: #f5f5f5;
             height: 100vh;
-            height: 100dvh;
             display: flex;
             flex-direction: column;
-            overscroll-behavior: none;
-            -webkit-overflow-scrolling: touch;
         }
         .header {
             background: linear-gradient(135deg, #c41e3a, #8b0000);
             color: #fff;
-            padding: 14px 20px;
+            padding: 16px 20px;
             text-align: center;
             flex-shrink: 0;
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            position: sticky;
-            top: 0;
-            z-index: 10;
         }
         .header h1 {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
             letter-spacing: 2px;
         }
         .header .subtitle {
-            font-size: 11px;
+            font-size: 12px;
             opacity: 0.8;
-            margin-top: 2px;
+            margin-top: 4px;
         }
         .chat-area {
             flex: 1;
@@ -52,7 +41,6 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            -webkit-overflow-scrolling: touch;
         }
         .message {
             max-width: 85%;
@@ -90,18 +78,15 @@
         .message p {
             margin-bottom: 8px;
         }
-        .message strong {
-            color: #c41e3a;
-        }
         .welcome {
             background: linear-gradient(135deg, #c41e3a 0%, #8b0000 100%);
             color: #fff;
             text-align: center;
-            padding: 24px 20px;
+            padding: 20px;
             border-radius: 16px;
         }
         .welcome .emblem {
-            font-size: 48px;
+            font-size: 40px;
             margin-bottom: 8px;
         }
         .welcome h2 {
@@ -127,7 +112,6 @@
             border-radius: 20px;
             font-size: 12px;
             cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
         }
         .quick-btn:active {
             background: rgba(255,255,255,0.35);
@@ -136,8 +120,7 @@
             flex-shrink: 0;
             background: #fff;
             border-top: 1px solid #e0e0e0;
-            padding: 10px 16px;
-            padding-bottom: max(10px, env(safe-area-inset-bottom));
+            padding: 12px 16px;
             display: flex;
             gap: 10px;
             align-items: flex-end;
@@ -147,7 +130,7 @@
             border: 1px solid #ddd;
             border-radius: 20px;
             padding: 10px 16px;
-            font-size: 16px;
+            font-size: 14px;
             resize: none;
             outline: none;
             font-family: inherit;
@@ -170,7 +153,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            -webkit-tap-highlight-color: transparent;
         }
         .input-area button:disabled {
             background: #ccc;
@@ -178,27 +160,10 @@
         }
         .disclaimer {
             text-align: center;
-            font-size: 10px;
+            font-size: 11px;
             color: #999;
             padding: 4px;
             background: #fff;
-        }
-        .install-tip {
-            display: none;
-            background: #fff3cd;
-            color: #856404;
-            text-align: center;
-            padding: 8px 12px;
-            font-size: 12px;
-            flex-shrink: 0;
-        }
-        .install-tip .close-tip {
-            margin-left: 8px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        @media (display-mode: standalone) {
-            .install-tip { display: none !important; }
         }
     </style>
 </head>
@@ -206,19 +171,14 @@
 
 <div class="header">
     <h1>☭ 党建问答AI</h1>
-    <div class="subtitle">金湾区直机关工委 · 智能党务助手</div>
-</div>
-
-<div class="install-tip" id="installTip">
-    📱 点击浏览器菜单「添加到主屏幕」即可像APP一样使用
-    <span class="close-tip" onclick="document.getElementById('installTip').style.display='none'">✕</span>
+    <div class="subtitle">智能党务助手</div>
 </div>
 
 <div class="chat-area" id="chatArea">
     <div class="welcome">
         <div class="emblem">☭</div>
         <h2>党建问答AI</h2>
-        <p>您好！我是金湾区线上党建指导员，能为基层党务工作者排忧解难的党建顾问，有党建问题都能问我～</p>
+        <p>您好！我是线上党建指导员，能为基层党务工作者排忧解难的党建顾问，有党建问题都能问我～</p>
         <div class="quick-btns">
             <div class="quick-btn" onclick="sendQuick('三会一课如何开展')">三会一课如何开展</div>
             <div class="quick-btn" onclick="sendQuick('发展党员的流程是什么')">发展党员流程</div>
@@ -237,8 +197,8 @@
 
 <script>
 const BOT_ID = '7636091245848313902';
+const API_TOKEN = 'pat_zliJr6IqE4GIQFadZhpgHpSLoK8Ti5pPdrMX2OMuonIhx76bwGpJjPJx6uAZTVy8';
 const API_URL = 'https://api.coze.cn/v3/chat';
-const API_KEY = ['pat_zliJr6IqE4GIQFadZhpgHpSLoK8Ti5p','PdrMX2OMuonIhx76bwGpJjPJx6uAZTVy8'].join('');
 
 let conversationId = null;
 let isLoading = false;
@@ -246,11 +206,6 @@ let isLoading = false;
 const chatArea = document.getElementById('chatArea');
 const userInput = document.getElementById('userInput');
 const sendBtn = document.getElementById('sendBtn');
-
-// Show install tip on mobile
-if (/Android|iPhone|iPad/i.test(navigator.userAgent) && !window.matchMedia('(display-mode: standalone)').matches) {
-    document.getElementById('installTip').style.display = 'block';
-}
 
 function handleKey(e) {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -282,7 +237,6 @@ async function sendMessage() {
     if (!text || isLoading) return;
 
     userInput.value = '';
-    userInput.style.height = 'auto';
     isLoading = true;
     sendBtn.disabled = true;
 
@@ -306,37 +260,27 @@ async function sendMessage() {
             payload.conversation_id = conversationId;
         }
 
-        let response;
-        try {
-            response = await fetch(API_URL, {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer ' + API_KEY,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            });
-        } catch(fetchErr) {
-            removeMessage(loadingEl);
-            addMessage('bot', '❌ 网络请求失败：' + fetchErr.message + '。请检查网络连接。');
-            isLoading = false;
-            sendBtn.disabled = false;
-            return;
-        }
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + API_TOKEN,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
 
         const data = await response.json();
 
         if (data.code !== 0) {
             removeMessage(loadingEl);
             addMessage('bot', '❌ 请求出错：' + (data.msg || '未知错误'));
-            isLoading = false;
-            sendBtn.disabled = false;
             return;
         }
 
         conversationId = data.data.conversation_id;
         const chatId = data.data.id;
 
+        // Poll for completion
         let attempts = 0;
         const maxAttempts = 60;
         const pollInterval = setInterval(async () => {
@@ -354,38 +298,33 @@ async function sendMessage() {
                 const pollResp = await fetch(
                     'https://api.coze.cn/v3/chat/retrieve?chat_id=' + chatId + '&conversation_id=' + conversationId,
                     {
-                        headers: { 'Authorization': 'Bearer ' + API_KEY }
+                        headers: { 'Authorization': 'Bearer ' + API_TOKEN }
                     }
                 );
                 const pollData = await pollResp.json();
 
                 if (pollData.data && pollData.data.status === 'completed') {
                     clearInterval(pollInterval);
-                    try {
-                        const msgResp = await fetch(
-                            'https://api.coze.cn/v3/chat/message/list?chat_id=' + chatId + '&conversation_id=' + conversationId,
-                            {
-                                headers: { 'Authorization': 'Bearer ' + API_KEY }
-                            }
-                        );
-                        const msgData = await msgResp.json();
+                    // Get messages
+                    const msgResp = await fetch(
+                        'https://api.coze.cn/v3/chat/message/list?chat_id=' + chatId + '&conversation_id=' + conversationId,
+                        {
+                            headers: { 'Authorization': 'Bearer ' + API_TOKEN }
+                        }
+                    );
+                    const msgData = await msgResp.json();
 
-                        removeMessage(loadingEl);
+                    removeMessage(loadingEl);
 
-                        if (msgData.data && msgData.data.length > 0) {
-                            const answerMsg = msgData.data.find(m => m.role === 'assistant' && m.type === 'answer');
-                            if (answerMsg) {
-                                addMessage('bot', formatAnswer(answerMsg.content));
-                            } else {
-                                addMessage('bot', '抱歉，未能获取到回答，请重新提问。');
-                            }
+                    if (msgData.data && msgData.data.length > 0) {
+                        const answerMsg = msgData.data.find(m => m.role === 'assistant' && m.type === 'answer');
+                        if (answerMsg) {
+                            addMessage('bot', formatAnswer(answerMsg.content));
                         } else {
                             addMessage('bot', '抱歉，未能获取到回答，请重新提问。');
                         }
-                    } catch(msgErr) {
-                        console.error('Message fetch error:', msgErr);
-                        removeMessage(loadingEl);
-                        addMessage('bot', '❌ 获取回复失败：' + msgErr.message);
+                    } else {
+                        addMessage('bot', '抱歉，未能获取到回答，请重新提问。');
                     }
                     isLoading = false;
                     sendBtn.disabled = false;
@@ -410,12 +349,16 @@ function escapeHtml(text) {
 }
 
 function formatAnswer(text) {
+    // Simple markdown-like formatting
     let html = escapeHtml(text);
+    // Bold
     html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    // Line breaks
     html = html.replace(/\n/g, '<br>');
     return html;
 }
 
+// Auto-resize textarea
 userInput.addEventListener('input', function() {
     this.style.height = 'auto';
     this.style.height = Math.min(this.scrollHeight, 100) + 'px';
